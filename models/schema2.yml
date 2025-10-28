@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: raw_gz_sales
+    columns:
+      - name: orders_id
+        tests:
+          - unique
+          - not_null
+      - name: date_date
+        tests:
+          - not_null
