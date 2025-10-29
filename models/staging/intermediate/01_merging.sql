@@ -1,7 +1,6 @@
 WITH product_cast AS (
   SELECT
     products_id,
-    -- normalize commas (e.g., "12,34" → "12.34"), strip symbols, cast
     SAFE_CAST(REGEXP_REPLACE(REPLACE(purchse_price, ',', '.'), r'[^0-9.\-]', '') AS NUMERIC) AS purchase_price
   FROM {{ ref("stg_gz_raw_data__raw_gz_product") }}
 ),
