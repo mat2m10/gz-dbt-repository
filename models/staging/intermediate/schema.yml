@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: 01_merging
+    description: "Sales joined to products with cleaned purchase_price and basic margin math."
+    columns:
+      - name: products_id
+        description: "Product id from product table (post-join)."
+        tests:
+          - not_null
+
+      - name: date_date
+        tests:
+          - not_null
+
+      - name: orders_id
+        tests:
+          - not_null
+
+      - name: pdt_id
+        description: "Product id from sales table prior to join."
+        tests:
+          - not_null
+          # Ensure every sales product id exists in the product staging table
+          - relationships:
+              to: ref('stg_gz_raw_data__raw_gz_product')
+              field: products_id
+
+      - name: revenue
+        tests:
+          - not_null
+
+      - name: quantity
+        tests:
+          - not_null
+
+      - name: purchase_price
+        description: "Parsed numeric price from purchse_price."
+        tests:
+          - not_null
+          # If negative prices aren't possible in your domain, keep this:
+          # - dbt_expectations.expect_column_values_to_be_between:
+          #     min_value: 0
+
+      - name: purchase_cost
+        description: "quantity * purchase_price (rounded 2)."
+
+      - name: margin
+        description: "revenue - purchase_cost (rounded 2)."
