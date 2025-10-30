@@ -1,0 +1,27 @@
+version: 2
+
+
+models:
+  - name: merge1
+    description: "Sales joined to products with cleaned purchase_price and basic margin math."
+  - name: merge2
+    description: "Copy of 01_merging for class; materialized as a table."
+    # config:
+    #   materialized: table           # <- uncomment to enforce TABLE via YAML instead of SQL
+    #   # Optional BigQuery perf settings:
+    #   # partition_by:
+    #   #   field: date_date
+    #   #   data_type: date
+    #   # cluster_by: [pdt_id, products_id]
+    columns:
+      - name: date_date
+      - name: pdt_id
+      - name: products_id
+      - name: orders_id
+      - name: revenue
+      - name: quantity
+      - name: purchase_price
+      - name: purchase_cost
+      - name: shipping_cost
+      - name: margin
+      - name: margin_net
